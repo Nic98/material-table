@@ -9,7 +9,7 @@ interface ComponentProps {
   content: string;
 }
 
-const MaterialTableComponent = (props: ComponentProps, ref: any) => {
+const ExampleComponent = (props: ComponentProps, ref: any) => {
   // const { title, content, ...others } = props;
   interface Column {
     title: string;
@@ -87,7 +87,7 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
   );
 };
 
-const RefMaterialTableComponent = forwardRef(MaterialTableComponent as ForwardRefRenderFunction<any, ComponentProps>);
-RefMaterialTableComponent.displayName = 'MaterialTableComponent';
+const RefExampleComponent = forwardRef(ExampleComponent as ForwardRefRenderFunction<any, ComponentProps>);
+RefExampleComponent.displayName = 'ExampleComponent';
 
-export default RefMaterialTableComponent;
+export default RefExampleComponent;

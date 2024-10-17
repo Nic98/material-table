@@ -88,6 +88,6 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
 };
 
 const RefMaterialTableComponent = forwardRef(MaterialTableComponent as ForwardRefRenderFunction<any, ComponentProps>);
-RefMaterialTableComponent.displayName = 'MaterialTableComponent';
+RefExampleComponent.displayName = 'ExampleComponent';
 
-export default RefMaterialTableComponent;
+export default RefExampleComponent;
