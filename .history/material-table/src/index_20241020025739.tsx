@@ -87,6 +87,8 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
     }
   }, []);
 
+  setData(await getDataSource());
+
   return (
     <div ref={ref}>
       <Table

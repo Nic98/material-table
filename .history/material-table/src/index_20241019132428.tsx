@@ -3,13 +3,11 @@ import {useState, useEffect, forwardRef, ForwardRefRenderFunction } from 'react'
 import { Badge, Table } from 'antd/es';
 import _ from 'lodash';
 import { addGoods, getGoodsList, deleteGoods, updateGoods } from './services/goodsServices.js';
-import { importDataSource, getDataSource } from './services/schemaManagement.js';
-
 
 interface ComponentProps {
   // title: string;
   // content: string;
-  dataSource?: Object[];
+  dataSource?: string;
   sign?: string;
 }
 
@@ -68,11 +66,14 @@ const columns: Column[] = [{
 
 const MaterialTableComponent = (props: ComponentProps, ref: any) => {
   let { dataSource, ...others } = props;
+  console.log(`this are the props of materialTable ${dataSource}, ${others}}`);
 
-  const [data, setData] = useState(dataSource);
-  const getTable = async ():Promise<Object[]> => {
+  const getTable = async () => {
     try {
-      importDataSource(await getGoodsList());
+      const data = await getGoodsList();
+      console.log(`here are the data~~~: ${data}`);
+      dataSource = data;
+      return data;
     } catch (error) {
       console.error('Error updating table:', error);
       return [];
@@ -91,7 +92,7 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
     <div ref={ref}>
       <Table
       columns={_.filter(columns, (item: { show: boolean; }) => item.show !== false)}
-      dataSource={_.uniqBy(data, 'key')}
+      dataSource={_.uniqBy(dataSource, 'key')}
       pagination={false}
       size="middle"
       scroll={{ y: 350 }}

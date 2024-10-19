@@ -82,10 +82,13 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
   useEffect(() => { 
     try {
       getTable();
+      setData(await getDataSource());
     } catch (error) {
       console.log('error', error);
     }
   }, []);
+
+  
 
   return (
     <div ref={ref}>

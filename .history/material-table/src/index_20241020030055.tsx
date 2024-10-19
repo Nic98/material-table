@@ -69,7 +69,7 @@ const columns: Column[] = [{
 const MaterialTableComponent = (props: ComponentProps, ref: any) => {
   let { dataSource, ...others } = props;
 
-  const [data, setData] = useState(dataSource);
+  const [data, setData] = useState();
   const getTable = async ():Promise<Object[]> => {
     try {
       importDataSource(await getGoodsList());
@@ -86,6 +86,8 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
       console.log('error', error);
     }
   }, []);
+
+  
 
   return (
     <div ref={ref}>

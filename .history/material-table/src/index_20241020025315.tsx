@@ -69,7 +69,6 @@ const columns: Column[] = [{
 const MaterialTableComponent = (props: ComponentProps, ref: any) => {
   let { dataSource, ...others } = props;
 
-  const [data, setData] = useState(dataSource);
   const getTable = async ():Promise<Object[]> => {
     try {
       importDataSource(await getGoodsList());
@@ -88,10 +87,11 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
   }, []);
 
   return (
+    console.log('dataSource', dataSource);
     <div ref={ref}>
       <Table
       columns={_.filter(columns, (item: { show: boolean; }) => item.show !== false)}
-      dataSource={_.uniqBy(data, 'key')}
+      dataSource={_.uniqBy(getDataSource(), 'key')}
       pagination={false}
       size="middle"
       scroll={{ y: 350 }}

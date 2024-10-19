@@ -27,8 +27,8 @@ const MaterialTableRubberMeta: IPublicTypeComponentMetadata = {
         },
         name: "dataSource",
         setter: {
-          componentName: "ObjectSetter",
-          initialValue: "[]",
+          componentName: "JsonSetter",
+          initialValue: "data",
         }
       },
       {

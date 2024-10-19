@@ -27,24 +27,23 @@ const MaterialTableRubberMeta: IPublicTypeComponentMetadata = {
         },
         name: "dataSource",
         setter: {
-          componentName: "ObjectSetter",
-          initialValue: "[]",
+          componentName: "StringSetter",
+          initialValue: "data",
         }
       },
       {
         title: {
           label: {
             type: "i18n",
-            "en-US": "Sign",
+            "en-US": "sign",
             "zh-CN": "信号"
           }
         },
-        name: "Sign",
+        name: "sign",
         setter: {
-          componentName: "StringSetter",
-          initialValue: "table",
+          initialValue: "data",
         }
-      }
+      }，
     ],
     "supports": {
       "style": true

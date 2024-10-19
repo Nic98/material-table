@@ -87,11 +87,13 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
     }
   }, []);
 
+  setData(getDataSource());
+
   return (
     <div ref={ref}>
       <Table
       columns={_.filter(columns, (item: { show: boolean; }) => item.show !== false)}
-      dataSource={_.uniqBy(data, 'key')}
+      dataSource={_.uniqBy(getDataSource(), 'key')}
       pagination={false}
       size="middle"
       scroll={{ y: 350 }}
