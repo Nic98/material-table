@@ -23,10 +23,10 @@ const getScenarioName = function () {
 };
 
 export const importDataSource = async (dataSource) => { 
-
+  console.log(dataSource);
   const name = getScenarioName();
-  const projectSchema = await getProjectSchemaFromDB();
 
+  const projectSchema = await getProjectSchemaFromDB(name);
   console.log("import",projectSchema);
   let componentsTree = projectSchema[0].content.componentsTree;
   
@@ -41,11 +41,13 @@ export const importDataSource = async (dataSource) => {
   // 更新 projectSchema
   projectSchema.componentsTree = componentsTree;
 
+  // // 保存回 localStorage
+  // localStorage.setItem(target_key, JSON.stringify(projectSchema));
+
   const dataWithKey = {
     name: name,
     content: projectSchema
   }
-
   try { 
     const response = await axios.post(API_URL_POST, dataWithKey);
     console.log('Success:', response);

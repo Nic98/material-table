@@ -4,7 +4,7 @@ const API_URL_GET = 'http://localhost:3000/projectSchema/get';
 const API_URL_POST = 'http://localhost:3000/projectSchema/add';
 
 
-export const getProjectSchemaFromDB = async () => {
+export const getProjectSchemaFromDB = async (name) => {
   try {
     const response = await axios.get(API_URL_GET);
     console.log(response)
@@ -23,10 +23,10 @@ const getScenarioName = function () {
 };
 
 export const importDataSource = async (dataSource) => { 
-
+  console.log(dataSource);
   const name = getScenarioName();
-  const projectSchema = await getProjectSchemaFromDB();
 
+  const projectSchema = await getProjectSchemaFromDB(name);
   console.log("import",projectSchema);
   let componentsTree = projectSchema[0].content.componentsTree;
   
@@ -41,11 +41,13 @@ export const importDataSource = async (dataSource) => {
   // 更新 projectSchema
   projectSchema.componentsTree = componentsTree;
 
+  // // 保存回 localStorage
+  // localStorage.setItem(target_key, JSON.stringify(projectSchema));
+
   const dataWithKey = {
     name: name,
     content: projectSchema
   }
-
   try { 
     const response = await axios.post(API_URL_POST, dataWithKey);
     console.log('Success:', response);

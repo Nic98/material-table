@@ -72,9 +72,7 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
   const [data, setData] = useState(dataSource);
   const getTable = async ():Promise<Object[]> => {
     try {
-      let data = await getGoodsList();
-      setData(data);
-      importDataSource(data);
+      importDataSource(await getGoodsList());
     } catch (error) {
       console.error('Error updating table:', error);
       return [];

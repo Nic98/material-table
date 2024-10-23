@@ -75,6 +75,7 @@ const MaterialTableComponent = (props: ComponentProps, ref: any) => {
       let data = await getGoodsList();
       setData(data);
       importDataSource(data);
+      
     } catch (error) {
       console.error('Error updating table:', error);
       return [];
