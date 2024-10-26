@@ -30,6 +30,8 @@ export const importDataSource = async (dataSource) => {
   // 解析 projectSchema
   projectSchema = JSON.parse(projectSchema.data[0].projectSchema);
 
+  console.log(projectSchema);
+
   // 找到 componentsTree
   const componentsTree = projectSchema.componentsTree;
   const pageId = projectSchema.componentsTree[0].docId;

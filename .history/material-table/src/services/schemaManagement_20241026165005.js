@@ -25,18 +25,13 @@ export const getProjectSchemaFromDB = async () => {
 export const importDataSource = async (dataSource) => { 
 
   const name = getScenarioName();
-  let projectSchema = await getProjectSchemaFromDB();
-
-  // 解析 projectSchema
-  projectSchema = JSON.parse(projectSchema.data[0].projectSchema);
-
-  // 找到 componentsTree
-  const componentsTree = projectSchema.componentsTree;
-  const pageId = projectSchema.componentsTree[0].docId;
-
+  const projectSchema = await getProjectSchemaFromDB();
+  const newProjectSchema = Object.assign({}, projectSchema);
+  
+  let componentsTree = JSON.parse((newProjectSchema.data)[0].projectSchema).componentsTree;
+  console.log(projectSchema)
   // 找到目标组件
-  const targetComponent = componentsTree[0].children.find(component =>
-    component.componentName === "MaterialTableRubber");
+  const targetComponent = componentsTree[0].children.find(component => component.componentName === "MaterialTableRubber");
   
   // 修改 dataSource 的值
   if (targetComponent) {
@@ -44,13 +39,14 @@ export const importDataSource = async (dataSource) => {
   }
 
   // 更新 projectSchema
-  projectSchema.componentsTree = componentsTree;
-  
-  projectSchema = JSON.stringify(projectSchema);
+  newProjectSchema.componentsTree = componentsTree;
+
+  const pageId = newProjectSchema.componentsTree[0].docId;
+  newProjectSchema = JSON.stringify(newProjectSchema);
   const dataWithKey = {
     pageId: pageId,
     pageName: name,
-    projectSchema: projectSchema
+    projectSchema: newProjectSchema
   }
 
   try { 

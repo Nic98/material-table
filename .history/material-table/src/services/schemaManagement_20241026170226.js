@@ -25,15 +25,15 @@ export const getProjectSchemaFromDB = async () => {
 export const importDataSource = async (dataSource) => { 
 
   const name = getScenarioName();
-  let projectSchema = await getProjectSchemaFromDB();
+  const projectSchema = await getProjectSchemaFromDB();
+  
 
   // 解析 projectSchema
   projectSchema = JSON.parse(projectSchema.data[0].projectSchema);
 
   // 找到 componentsTree
   const componentsTree = projectSchema.componentsTree;
-  const pageId = projectSchema.componentsTree[0].docId;
-
+  
   // 找到目标组件
   const targetComponent = componentsTree[0].children.find(component =>
     component.componentName === "MaterialTableRubber");
@@ -45,6 +45,7 @@ export const importDataSource = async (dataSource) => {
 
   // 更新 projectSchema
   projectSchema.componentsTree = componentsTree;
+
   
   projectSchema = JSON.stringify(projectSchema);
   const dataWithKey = {

@@ -25,7 +25,7 @@ export const getProjectSchemaFromDB = async () => {
 export const importDataSource = async (dataSource) => { 
 
   const name = getScenarioName();
-  let projectSchema = await getProjectSchemaFromDB();
+  const projectSchema = await getProjectSchemaFromDB();
 
   // 解析 projectSchema
   projectSchema = JSON.parse(projectSchema.data[0].projectSchema);
@@ -45,6 +45,7 @@ export const importDataSource = async (dataSource) => {
 
   // 更新 projectSchema
   projectSchema.componentsTree = componentsTree;
+
   
   projectSchema = JSON.stringify(projectSchema);
   const dataWithKey = {

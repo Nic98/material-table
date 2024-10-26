@@ -15,6 +15,7 @@ const getScenarioName = function () {
 export const getProjectSchemaFromDB = async () => {
   try {
     const response = await axios.get(API_URL_GET);
+    console.log(response)
     return response.data;
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -25,18 +26,14 @@ export const getProjectSchemaFromDB = async () => {
 export const importDataSource = async (dataSource) => { 
 
   const name = getScenarioName();
-  let projectSchema = await getProjectSchemaFromDB();
-
-  // 解析 projectSchema
-  projectSchema = JSON.parse(projectSchema.data[0].projectSchema);
-
-  // 找到 componentsTree
-  const componentsTree = projectSchema.componentsTree;
-  const pageId = projectSchema.componentsTree[0].docId;
-
+  const projectSchema = await getProjectSchemaFromDB();
+  
+  console.log("import", projectSchema);
+  
+  let componentsTree = JSON.parse((projectSchema.data)[0].projectSchema.componentsTree;
+  
   // 找到目标组件
-  const targetComponent = componentsTree[0].children.find(component =>
-    component.componentName === "MaterialTableRubber");
+  const targetComponent = componentsTree[0].children.find(component => component.componentName === "MaterialTableRubber");
   
   // 修改 dataSource 的值
   if (targetComponent) {
@@ -45,10 +42,11 @@ export const importDataSource = async (dataSource) => {
 
   // 更新 projectSchema
   projectSchema.componentsTree = componentsTree;
-  
+
+
   projectSchema = JSON.stringify(projectSchema);
   const dataWithKey = {
-    pageId: pageId,
+    pageId: projectSchema[0].docId,
     pageName: name,
     projectSchema: projectSchema
   }
