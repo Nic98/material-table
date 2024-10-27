@@ -15,7 +15,7 @@ const getScenarioName = function () {
 export const getProjectSchemaFromDB = async () => {
   const name = getScenarioName();
   try {
-    const response = await axios.get(API_URL_GET, name);
+    const response = await axios.get(API_URL_GET);
     return response.data;
   } catch (error) {
     console.error('Error fetching data:', error);
