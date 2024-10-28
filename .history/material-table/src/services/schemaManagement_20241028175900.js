@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL_GET = 'http://localhost:3000/projectSchema/get';
 const API_URL_POST = 'http://localhost:3000/projectSchema/save';
-const API_URL_GETPAGE = 'http://localhost:3000/projectSchema/getPage';
+
 
 const getScenarioName = function () {
   if (location.search) {
@@ -11,17 +11,6 @@ const getScenarioName = function () {
   return 'general';
 };
 
-export const getOneProjectSchemaFromDB = async (name) => {
-  const pageId = 'Lowcode-' + name;
-  try {
-    const response = await axios.post(API_URL_GETPAGE, { pageId: pageId });
-    const resdata = response.data.data;
-    return resdata[0].projectSchema;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error;
-  }
-};
 
 export const getProjectSchemaFromDB = async () => {
   const name = getScenarioName();
@@ -35,22 +24,29 @@ export const getProjectSchemaFromDB = async () => {
   }
 };
 
-export const importDataSource = async (dataSource) => {
+export const importDataSource = async (dataSource) => { 
 
   const name = getScenarioName();
   const pageId = "Lowcode-" + name;
-  let projectSchema = await getOneProjectSchemaFromDB(name);
+  let projectSchema = await getProjectSchemaFromDB();
+
+  console.pro
 
   // 解析 projectSchema
-  projectSchema = JSON.parse(projectSchema);
+  projectSchema = JSON.parse(projectSchema.data[0].projectSchema);
 
   // 找到 componentsTree
   const componentsTree = projectSchema.componentsTree;
 
+
+  console.log(componentsTree[0]);
+
   // 找到目标组件
   const targetComponent = componentsTree[0].children.find(component =>
     component.componentName === "MaterialTableRubber");
-    
+  
+  console.log(targetComponent);
+  
   // 修改 dataSource 的值
   if (targetComponent) {
     targetComponent.props.dataSource = dataSource;
@@ -59,15 +55,14 @@ export const importDataSource = async (dataSource) => {
   // 更新 projectSchema
   projectSchema.componentsTree = componentsTree;
   
-  // 上传 projectSchema 到数据库
   projectSchema = JSON.stringify(projectSchema);
   const dataWithKey = {
     pageId: pageId,
     pageName: name,
     projectSchema: projectSchema
-  };
+  }
 
-  try {
+  try { 
     const response = await axios.post(API_URL_POST, dataWithKey);
     console.log('Success:', response);
     return response.data;
@@ -75,4 +70,4 @@ export const importDataSource = async (dataSource) => {
     console.error('Error:', error);
     throw error;
   }
-};
+}

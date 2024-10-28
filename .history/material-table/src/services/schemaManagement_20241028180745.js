@@ -4,14 +4,7 @@ const API_URL_GET = 'http://localhost:3000/projectSchema/get';
 const API_URL_POST = 'http://localhost:3000/projectSchema/save';
 const API_URL_GETPAGE = 'http://localhost:3000/projectSchema/getPage';
 
-const getScenarioName = function () {
-  if (location.search) {
-    return new URLSearchParams(location.search.slice(1)).get('scenarioName') || 'general';
-  }
-  return 'general';
-};
-
-export const getOneProjectSchemaFromDB = async (name) => {
+export const getOneProjectSchemaFromDB = async (name) => { 
   const pageId = 'Lowcode-' + name;
   try {
     const response = await axios.post(API_URL_GETPAGE, { pageId: pageId });
@@ -21,7 +14,15 @@ export const getOneProjectSchemaFromDB = async (name) => {
     console.error('Error fetching data:', error);
     throw error;
   }
+}
+
+const getScenarioName = function () {
+  if (location.search) {
+    return new URLSearchParams(location.search.slice(1)).get('scenarioName') || 'general';
+  }
+  return 'general';
 };
+
 
 export const getProjectSchemaFromDB = async () => {
   const name = getScenarioName();
@@ -35,15 +36,16 @@ export const getProjectSchemaFromDB = async () => {
   }
 };
 
-export const importDataSource = async (dataSource) => {
+export const importDataSource = async (dataSource) => { 
 
   const name = getScenarioName();
   const pageId = "Lowcode-" + name;
+  console.log(name);
   let projectSchema = await getOneProjectSchemaFromDB(name);
 
   // 解析 projectSchema
   projectSchema = JSON.parse(projectSchema);
-
+  console.log(projectSchema);
   // 找到 componentsTree
   const componentsTree = projectSchema.componentsTree;
 
@@ -59,15 +61,14 @@ export const importDataSource = async (dataSource) => {
   // 更新 projectSchema
   projectSchema.componentsTree = componentsTree;
   
-  // 上传 projectSchema 到数据库
   projectSchema = JSON.stringify(projectSchema);
   const dataWithKey = {
     pageId: pageId,
     pageName: name,
     projectSchema: projectSchema
-  };
+  }
 
-  try {
+  try { 
     const response = await axios.post(API_URL_POST, dataWithKey);
     console.log('Success:', response);
     return response.data;
@@ -75,4 +76,4 @@ export const importDataSource = async (dataSource) => {
     console.error('Error:', error);
     throw error;
   }
-};
+}

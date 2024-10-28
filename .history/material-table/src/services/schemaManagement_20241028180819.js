@@ -39,6 +39,7 @@ export const importDataSource = async (dataSource) => {
 
   const name = getScenarioName();
   const pageId = "Lowcode-" + name;
+  console.log(name);
   let projectSchema = await getOneProjectSchemaFromDB(name);
 
   // 解析 projectSchema
@@ -59,7 +60,6 @@ export const importDataSource = async (dataSource) => {
   // 更新 projectSchema
   projectSchema.componentsTree = componentsTree;
   
-  // 上传 projectSchema 到数据库
   projectSchema = JSON.stringify(projectSchema);
   const dataWithKey = {
     pageId: pageId,

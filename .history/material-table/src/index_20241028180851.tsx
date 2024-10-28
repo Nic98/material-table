@@ -7,7 +7,10 @@ import { importDataSource } from './services/schemaManagement.js';
 
 
 interface ComponentProps {
+  // title: string;
+  // content: string;
   dataSource?: Object[];
+  sign?: string;
 }
 
 interface Column {

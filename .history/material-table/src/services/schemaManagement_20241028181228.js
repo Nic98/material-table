@@ -59,7 +59,7 @@ export const importDataSource = async (dataSource) => {
   // 更新 projectSchema
   projectSchema.componentsTree = componentsTree;
   
-  // 上传 projectSchema 到数据库
+  //
   projectSchema = JSON.stringify(projectSchema);
   const dataWithKey = {
     pageId: pageId,
